@@ -6,7 +6,6 @@ use rand::Rng;
 use std::io;
 
 fn main() {
-
     let fruits = ["Apple", "Orange", "Banana"];
 
     let mut fruit_properties = MultiMap::new();
@@ -16,7 +15,6 @@ fn main() {
     fruit_properties.insert("Orange", "Orange");
 
     let random_fruit = rand::thread_rng().choose(&fruits).unwrap();
-
     match fruit_properties.get_vec(random_fruit) {
         Some(properties) => {
             for property in properties {
@@ -27,13 +25,19 @@ fn main() {
     }
     println!("What am I thinking of?");
     
-    let mut guess = String::new();
+    loop {
+        
+        let mut guess = String::new();
+        io::stdin().read_line(&mut guess)
+            .expect("Failed to read line");
 
-    io::stdin().read_line(&mut guess)
-        .expect("Failed to read line");
-
-    if &guess.trim() == random_fruit {
-       println!("You guessed it!"); 
+        if &guess.trim() == random_fruit {
+            println!("You guessed it!");
+            break;
+        }
+        else {
+            println!("Nope! Guess again.");
+        }
     }
 
     //println!("I picked {}", random_fruit);
